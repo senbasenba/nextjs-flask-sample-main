@@ -68,3 +68,6 @@ jobs:
           package: ./deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFBE04A844B142B9961148719E656BE1 }}
 
+
+- name: Wait before deploy
+  run: sleep 30
