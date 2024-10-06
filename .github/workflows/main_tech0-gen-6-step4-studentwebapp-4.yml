@@ -1,5 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - tech0-gen-6-step4-studentwebapp-4
 
 on:
@@ -18,24 +19,16 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
 
-      - name: Install dependencies, build, and test
+      - name: npm install, build, and test
         run: |
-          cd frontend
           npm install
           npm run build --if-present
           npm run test --if-present
 
-      - name: Copy artifact for deployment job
-        run: |
-          mkdir deploy
-          cp -r ./frontend/.next/standalone/. ./deploy
-          cp -r ./frontend/public ./deploy
-          cp -r ./frontend/.next/static/. ./deploy/.next/static
-
       - name: Zip artifact for deployment
-        run: zip release.zip ./deploy -r 
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -65,9 +58,5 @@ jobs:
         with:
           app-name: 'tech0-gen-6-step4-studentwebapp-4'
           slot-name: 'Production'
-          package: ./deploy
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFBE04A844B142B9961148719E656BE1 }}
-
-
-- name: Wait before deploy
-  run: sleep 30
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A84B9125B9A4461883F7FD271BB7AD13 }}
