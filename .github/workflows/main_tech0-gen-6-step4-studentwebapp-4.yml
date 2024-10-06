@@ -69,6 +69,13 @@ jobs:
           package: ./deploy
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BFBE04A844B142B9961148719E656BE1 }}
 
+- name: Install dependencies and build in frontend directory
+  run: |
+    cd frontend
+    npm install
+    npm run build --if-present
+    npm run test --if-present
+
 
 
 
